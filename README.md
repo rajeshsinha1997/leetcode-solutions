@@ -25,7 +25,7 @@ leetcode-solutions/
 | ---------- | ------ |
 | Easy       | 01     |
 | Medium     | 00     |
-| Hard       | 00     |
+| Hard       | 01     |
 
 ## 🛠️ How to Use
 
