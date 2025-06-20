@@ -6,46 +6,94 @@
 
 // @lc code=start
 function findMedianSortedArrays(nums1: number[], nums2: number[]): number {
-  // calculate the total number of elements in both arrays
+  // if nums1 is longer than nums2, swap them
+  if (nums1.length > nums2.length) {
+    [nums1, nums2] = [nums2, nums1];
+  }
+
+  // find the total number of elements in both arrays
   const totalNumberOfElements = nums1.length + nums2.length;
 
   // variable to check if total number of elements is even or odd
   const isEven = totalNumberOfElements % 2 === 0;
 
-  // find the median index
-  // for odd number of elements, it is the index of the middle element
-  // for even number of elements, it is the index of the second middle element
-  const medianIndex = Math.floor(totalNumberOfElements / 2);
+  // calculate the total number of elements in the left half
+  let elementsInLeftHalf = Math.floor((totalNumberOfElements + 1) / 2);
 
-  // create two pointers to traverse both arrays and another pointer to keep track of the current index in the merged array
-  let fp = 0,
-    sp = 0,
-    mp = 0;
+  // find the minimum and maximum number of elements from the first array that can be in the left half
+  let minElementsFromFirstArrayInLeftHalf = 0;
+  let maxElementsFromFirstArrayInLeftHalf = nums1.length;
 
-  // create two variables to store the current and previous values of the merged array
-  let current = 0,
-    previous = 0;
+  // variables to store the left maximum and right minimum values from both arrays
+  // these will be used to find the median
+  let leftMaxFromFirstArray = 0;
+  let rightMinFromFirstArray = 0;
+  let leftMaxFromSecondArray = 0;
+  let rightMinFromSecondArray = 0;
 
-  // loop until we reach the median index
-  while (mp <= medianIndex) {
-    // store the current value of the merged array as the previous value
-    previous = current;
+  // binary search to find the partition point
+  while (
+    minElementsFromFirstArrayInLeftHalf <= maxElementsFromFirstArrayInLeftHalf
+  ) {
+    // find how many elements to take from the first array
+    const numberOfElementsToTakeFromFirstArray = Math.floor(
+      (minElementsFromFirstArrayInLeftHalf +
+        maxElementsFromFirstArrayInLeftHalf) /
+        2
+    );
 
-    // if the first pointer is less than the length of the first array (which means there are still elements to consider in the first array) and either the second pointer is greater than or equal to the length of the second array (which means there are no elements left in the second array to consider) or the current element in the first array is less than or equal to the current element in the second array
-    if (fp < nums1.length && (sp >= nums2.length || nums1[fp] <= nums2[sp])) {
-      // set the current value to the current element in the first array and increment the first pointer
-      current = nums1[fp++];
+    // find how many elements to take from the second array
+    const numberOfElementsToTakeFromSecondArray =
+      elementsInLeftHalf - numberOfElementsToTakeFromFirstArray;
+
+    // find the left maximum and right minimum values from first array
+    leftMaxFromFirstArray =
+      numberOfElementsToTakeFromFirstArray > 0
+        ? nums1[numberOfElementsToTakeFromFirstArray - 1]
+        : -Infinity;
+    rightMinFromFirstArray =
+      numberOfElementsToTakeFromFirstArray < nums1.length
+        ? nums1[numberOfElementsToTakeFromFirstArray]
+        : Infinity;
+
+    // find the left maximum and right minimum values from second array
+    leftMaxFromSecondArray =
+      numberOfElementsToTakeFromSecondArray > 0
+        ? nums2[numberOfElementsToTakeFromSecondArray - 1]
+        : -Infinity;
+    rightMinFromSecondArray =
+      numberOfElementsToTakeFromSecondArray < nums2.length
+        ? nums2[numberOfElementsToTakeFromSecondArray]
+        : Infinity;
+
+    // check if we have found the correct partition
+    if (
+      leftMaxFromFirstArray <= rightMinFromSecondArray &&
+      leftMaxFromSecondArray <= rightMinFromFirstArray
+    ) {
+      // if we have found the correct partition, break the loop
+      break;
     }
-    // otherwise, set the current value to the current element in the second array and increment the second pointer
+    // if the left maximum from first array is greater than the right minimum from second array,
+    // it means we need to take fewer elements from the first array
+    if (leftMaxFromFirstArray > rightMinFromSecondArray) {
+      maxElementsFromFirstArrayInLeftHalf =
+        numberOfElementsToTakeFromFirstArray - 1;
+    }
+    // if the left maximum from second array is greater than the right minimum from first array,
+    // it means we need to take more elements from the first array
     else {
-      current = nums2[sp++];
+      minElementsFromFirstArrayInLeftHalf =
+        numberOfElementsToTakeFromFirstArray + 1;
     }
-
-    // increment the merged array pointer
-    mp++;
   }
 
-  // if the total number of elements is even, return the average of the current and previous values, else return the current value
-  return isEven ? (current + previous) / 2 : current;
+  // if total number of elements is even, return the average of the two middle elements.
+  // if total number of elements is odd, return the maximum of the left half
+  return isEven
+    ? (Math.max(leftMaxFromFirstArray, leftMaxFromSecondArray) +
+        Math.min(rightMinFromFirstArray, rightMinFromSecondArray)) /
+        2
+    : Math.max(leftMaxFromFirstArray, leftMaxFromSecondArray);
 }
 // @lc code=end
