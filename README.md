@@ -27,6 +27,10 @@ leetcode-solutions/
 | Medium     | 00     |
 | Hard       | 01     |
 
+# Progress Chart
+
+![Chart](assets/problem-solved-count-chart.png)
+
 ## 🛠️ How to Use
 
 Clone this repository and explore the solutions.
