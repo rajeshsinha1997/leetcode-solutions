@@ -6,15 +6,10 @@
 
 // @lc code=start
 function twoSum(nums: number[], target: number): number[] {
-  // check if the input array has only two elements
-  if (nums.length === 2) {
-    // return the indices of the two elements
-    return [0, 1];
-  }
-
   // create an index store object to store the numbers and their indices
   const indexStore: Record<number, number> = {};
 
+  // iterate through the given array of numbers
   for (let i = 0; i < nums.length; i++) {
     // calculate the complement of the current number
     const complement = target - nums[i];
@@ -27,7 +22,7 @@ function twoSum(nums: number[], target: number): number[] {
       return [indexStore[complement], i];
     }
 
-    // store the current number and its index in the index store
+    // if not found, store the current number and its index in the index store
     // this allows us to check for the complement in future iterations
     indexStore[nums[i]] = i;
   }
