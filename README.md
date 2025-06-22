@@ -23,7 +23,7 @@ leetcode-solutions/
 
 | Difficulty | Solved |
 | ---------- | ------ |
-| Easy       | 01     |
+| Easy       | 02     |
 | Medium     | 03     |
 | Hard       | 01     |
 
