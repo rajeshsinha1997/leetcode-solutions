@@ -5,34 +5,41 @@
  */
 
 // @lc code=start
+/**
+ * Backtrack through the nums array to find all subsets
+ * @param nums an array of numbers for which we want to find all subsets
+ * @param currentInd the current index in the nums array
+ * @param currentSubset the current subset being constructed
+ * @param result the array of all subsets
+ */
+function backtrack(
+  nums: number[],
+  currentInd: number,
+  currentSubset: number[],
+  result: number[][]
+) {
+  // check if we have reached the end of the original array
+  if (currentInd === nums.length) {
+    // add the current subset to the result array
+    result.push([...currentSubset]);
+  } else {
+    // add the current number to the subset
+    currentSubset.push(nums[currentInd]);
+    // recursively call backtrack with the next index
+    backtrack(nums, currentInd + 1, currentSubset, result);
+    // backtrack by removing the last element
+    currentSubset.pop();
+    // recursively call backtrack without the current number
+    backtrack(nums, currentInd + 1, currentSubset, result);
+  }
+}
+
 function subsets(nums: number[]): number[][] {
   // create a result array that will hold all subsets and add the empty set and the full set
-  const result: number[][] = [[], [...nums]];
+  const result: number[][] = [];
 
-  // iterate through the nums array to create subsets
-  for (let ind = 0; ind < nums.length; ind++) {
-    // for each index, create an end point which indicates the end of the current subset
-    // and iterate through the array from the current index to the end point
-    let endPoint = ind;
-
-    // loop until the end point reaches the length of the nums array
-    while (endPoint < nums.length) {
-      // create a collector array to hold the current subset
-      let collector: number[] = [];
-
-      // iterate through the array from the current index to the end point
-      for (let jInd = ind; jInd <= endPoint; jInd++) {
-        // push the current number into the collector array
-        collector.push(nums[jInd]);
-      }
-
-      // push the collector array into the result array
-      result.push(collector);
-
-      // increment the end point to create the next subset
-      endPoint++;
-    }
-  }
+  // start the backtracking process from index 0
+  backtrack(nums, 0, [], result);
 
   // return the result array containing all subsets
   return result;
