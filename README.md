@@ -30,7 +30,7 @@ leetcode-solutions/
 # Progress Chart
 
 > ⚠️ **Note:** The progress chart below is **not updated in real time**.  
-> 📅 **Last updated:** June 22, 2025
+> 📅 **Last updated on:** June 23, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)
 
