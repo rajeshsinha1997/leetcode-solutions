@@ -23,14 +23,14 @@ leetcode-solutions/
 
 | Difficulty | Solved           |
 | ---------- | ---------------- |
-| Easy       | 02   |
-| Medium     | 04 |
-| Hard       | 01   |
+| Easy       | {{EASY_COUNT}}   |
+| Medium     | {{MEDIUM_COUNT}} |
+| Hard       | {{HARD_COUNT}}   |
 
 # Progress Chart
 
 > ⚠️ **Note:** The progress chart below is **not updated in real time**.  
-> 📅 **Last updated on:** June 25, 2025
+> 📅 **Last updated on:** {{LAST_UPDATED}}
 
 ![Chart](assets/problem-solved-count-chart.png)
 
