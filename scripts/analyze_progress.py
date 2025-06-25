@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from math import cos, sin, pi
 
 # ---------- CONFIG ----------
-REPO_PATH = "D:\\GitHub Projects\\leetcode-solutions\\solution-set-1_typescript"  # Change this if your solution folder moves
+REPO_PATH = "../solution-set-1_typescript"  # Change this if your solution folder moves
 CACHE_DIR = Path(__file__).parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)  # Create it if it doesn't exist
 CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"
