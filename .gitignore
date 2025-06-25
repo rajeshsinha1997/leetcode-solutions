@@ -135,5 +135,10 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Ignore cache and error logs
+scripts/cache/
+scripts/errors/
+
 # custom added
 .vscode
+.venv

@@ -23,17 +23,18 @@ leetcode-solutions/
 
 ## 📈 Progress
 
-> 📅 **Last updated on:** June 25, 2025
+> 📅 **Last updated on:** {{LAST_UPDATED}}
 
 | Difficulty | Solved |
 | ---------- | ------ |
-| Easy       | 02     |
-| Medium     | 04     |
-| Hard       | 01     |
+
+{{EASY_ROW}}
+{{MEDIUM_ROW}}
+{{HARD_ROW}}
 
 # Progress Chart
 
-> 📅 **Last updated on:** June 25, 2025
+> 📅 **Last updated on:** {{LAST_UPDATED}}
 
 ![Chart](assets/problem-solved-count-chart.png)
 
