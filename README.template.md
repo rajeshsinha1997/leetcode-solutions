@@ -21,11 +21,12 @@ leetcode-solutions/
 
 ## 📈 Progress
 
-| Difficulty | Solved           |
-| ---------- | ---------------- |
-| Easy       | {{EASY_COUNT}}   |
-| Medium     | {{MEDIUM_COUNT}} |
-| Hard       | {{HARD_COUNT}}   |
+| Difficulty | Solved |
+| ---------- | ------ |
+
+{{EASY_ROW}}
+{{MEDIUM_ROW}}
+{{HARD_ROW}}
 
 # Progress Chart
 

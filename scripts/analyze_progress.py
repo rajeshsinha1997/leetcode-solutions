@@ -107,6 +107,10 @@ def log_missing_problems(missing_ids):
     print(f"📁 Missing problem IDs saved to: {MISSING_PROBLEMS_PATH}")
 
 
+def format_row(label, count):
+    return f"| {label.ljust(10)} | {str(count).zfill(2).ljust(6)} |"
+
+
 def generate_readme(easy, medium, hard):
     TEMPLATE_PATH = Path(__file__).parent.parent / "README.template.md"
     README_PATH = Path(__file__).parent.parent / "README.md"
@@ -120,10 +124,32 @@ def generate_readme(easy, medium, hard):
     with open(TEMPLATE_PATH, "r", encoding="utf-8") as f:
         template = f.read()
 
+    # Generate full rows
+    easy_row = format_row("Easy", easy)
+    medium_row = format_row("Medium", medium)
+    hard_row = format_row("Hard", hard)
+
+    # Remove any blank lines just before row placeholders
+    template_lines = template.splitlines()
+    cleaned_lines = []
+    skip_blank = False
+
+    for i, line in enumerate(template_lines):
+        if line.strip() in ["{{EASY_ROW}}", "{{MEDIUM_ROW}}", "{{HARD_ROW}}"]:
+            # Remove blank line if it exists just before
+            if cleaned_lines and cleaned_lines[-1].strip() == "":
+                cleaned_lines.pop()
+            skip_blank = True
+        cleaned_lines.append(line)
+
+    # Convert back to a single string
+    cleaned_template = "\n".join(cleaned_lines)
+
+    # Now perform the replacements
     output = (
-        template.replace("{{EASY_COUNT}}", f"{easy:02}")
-        .replace("{{MEDIUM_COUNT}}", f"{medium:02}")
-        .replace("{{HARD_COUNT}}", f"{hard:02}")
+        cleaned_template.replace("{{EASY_ROW}}", easy_row)
+        .replace("{{MEDIUM_ROW}}", medium_row)
+        .replace("{{HARD_ROW}}", hard_row)
         .replace("{{LAST_UPDATED}}", today_str)
     )
 

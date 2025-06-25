@@ -21,11 +21,11 @@ leetcode-solutions/
 
 ## 📈 Progress
 
-| Difficulty | Solved           |
-| ---------- | ---------------- |
-| Easy       | 02   |
-| Medium     | 04 |
-| Hard       | 01   |
+| Difficulty | Solved |
+| ---------- | ------ |
+| Easy       | 02     |
+| Medium     | 04     |
+| Hard       | 01     |
 
 # Progress Chart
 
