@@ -15,6 +15,7 @@ CACHE_DIR = Path(__file__).parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)  # Create it if it doesn't exist
 CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"
 LEETCODE_API_URL = "https://leetcode.com/api/problems/algorithms/"
+TEMPLATE_PATH = Path(__file__).parent.parent / "README.template.md"
 README_PATH = Path(__file__).parent.parent / "README.md"
 MISSING_DATA_DIR = Path(__file__).parent / "errors"
 MISSING_DATA_DIR.mkdir(exist_ok=True)
@@ -184,9 +185,6 @@ def format_row(label, count):
 
 
 def generate_readme(easy, medium, hard):
-    TEMPLATE_PATH = Path(__file__).parent.parent / "README.template.md"
-    README_PATH = Path(__file__).parent.parent / "README.md"
-
     if not TEMPLATE_PATH.exists():
         print("❌ README.template.md not found.")
         return
@@ -204,14 +202,12 @@ def generate_readme(easy, medium, hard):
     # Remove any blank lines just before row placeholders
     template_lines = template.splitlines()
     cleaned_lines = []
-    skip_blank = False
 
-    for i, line in enumerate(template_lines):
+    for line in template_lines:
         if line.strip() in ["{{EASY_ROW}}", "{{MEDIUM_ROW}}", "{{HARD_ROW}}"]:
             # Remove blank line if it exists just before
             if cleaned_lines and cleaned_lines[-1].strip() == "":
                 cleaned_lines.pop()
-            skip_blank = True
         cleaned_lines.append(line)
 
     # Convert back to a single string
