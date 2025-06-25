@@ -1,5 +1,7 @@
 # 🧠 LeetCode Solutions
 
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue?style=flat-square)
+
 This repository contains my personal solutions to various problems on [LeetCode](https://leetcode.com/). I use this repo to track my progress and improve my problem-solving skills.
 
 ## 📂 Folder Structure
