@@ -1,3 +1,4 @@
+# 📦 Imports
 import os
 import re
 import json
@@ -9,28 +10,31 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from math import cos, sin, pi
 
-# ---------- CONFIG ----------
-REPO_PATH = "../solution-set-1_typescript"  # Change this if your solution folder moves
-CACHE_DIR = Path(__file__).parent / "cache"
-CACHE_DIR.mkdir(exist_ok=True)  # Create it if it doesn't exist
-CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"
-LEETCODE_API_URL = "https://leetcode.com/api/problems/algorithms/"
-TEMPLATE_PATH = Path(__file__).parent.parent / "README.template.md"
-README_PATH = Path(__file__).parent.parent / "README.md"
-MISSING_DATA_DIR = Path(__file__).parent / "errors"
+# ---------- CONFIGURATION ----------
+REPO_PATH = "../solution-set-1_typescript"  # Path to solution directory
+CACHE_DIR = Path(__file__).parent / "cache"  # Cache directory for API data
+CACHE_DIR.mkdir(exist_ok=True)  # Create cache directory if it doesn't exist
+CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"  # Cache file path
+LEETCODE_API_URL = "https://leetcode.com/api/problems/algorithms/"  # LeetCode API URL
+TEMPLATE_PATH = Path(__file__).parent.parent / "README.template.md"  # Template README
+README_PATH = Path(__file__).parent.parent / "README.md"  # Final README
+MISSING_DATA_DIR = Path(__file__).parent / "errors"  # Directory for missing data logs
 MISSING_DATA_DIR.mkdir(exist_ok=True)
-MISSING_PROBLEMS_PATH = MISSING_DATA_DIR / "missing_problems.json"
+MISSING_PROBLEMS_PATH = MISSING_DATA_DIR / "missing_problems.json"  # Log file path
 CHART_OUTPUT_PATH = (
     Path(__file__).parent.parent / "assets" / "problem-solved-count-chart.png"
-)
-# ----------------------------
+)  # Output chart path
+
+# ---------- UTILITY FUNCTIONS ----------
 
 
+# Extracts the problem number from filename prefix (e.g., '123.problem.ts' -> 123)
 def extract_problem_number(filename):
     match = re.match(r"(\d+)\.", filename)
     return int(match.group(1)) if match else None
 
 
+# Returns a set of all LeetCode problem IDs present in the solution directory
 def get_problem_ids_in_repo(repo_path):
     problem_ids = set()
     for fname in os.listdir(repo_path):
@@ -40,14 +44,12 @@ def get_problem_ids_in_repo(repo_path):
     return problem_ids
 
 
+# Fetches metadata from LeetCode or uses cached data if available and complete
 def fetch_leetcode_metadata(expected_ids=None):
-    # Try loading from cache first
     if CACHE_PATH.exists():
         with open(CACHE_PATH, "r", encoding="utf-8") as f:
             print("📂 Loading metadata from cache...")
             cached_data = json.load(f)
-
-            # Validate that all expected question IDs are present
             if expected_ids is None or all(
                 str(qid) in cached_data for qid in expected_ids
             ):
@@ -56,7 +58,6 @@ def fetch_leetcode_metadata(expected_ids=None):
             else:
                 print("⚠️ Cache missing some problems. Refreshing...")
 
-    # Fetch fresh data from LeetCode
     print("🔄 Fetching metadata from LeetCode...")
     response = requests.get(LEETCODE_API_URL)
     response.raise_for_status()
@@ -76,6 +77,7 @@ def fetch_leetcode_metadata(expected_ids=None):
     return problem_map
 
 
+# Analyzes the repo and returns difficulty counts and a list of unmatched problems
 def analyze_repo(repo_path, problem_map):
     counts = defaultdict(int)
     missing_problems = []
@@ -93,6 +95,7 @@ def analyze_repo(repo_path, problem_map):
     return dict(counts), missing_problems
 
 
+# Prints a formatted summary of problem counts
 def print_summary(counts, label="Your Solutions"):
     print(f"\n📊 Summary of {label} by Difficulty:\n")
     for diff in ["easy", "medium", "hard"]:
@@ -100,29 +103,26 @@ def print_summary(counts, label="Your Solutions"):
     print()
 
 
+# Logs problems missing from metadata into a separate JSON file
 def log_missing_problems(missing_ids):
     if not missing_ids:
         return
-
     print("\n❗ Missing problem metadata for the following question numbers:")
     print(", ".join(str(i) for i in sorted(missing_ids)))
-
     with open(MISSING_PROBLEMS_PATH, "w", encoding="utf-8") as f:
         json.dump(sorted(missing_ids), f, indent=2)
-
     print(f"📁 Missing problem IDs saved to: {MISSING_PROBLEMS_PATH}")
 
 
+# Generates and saves a donut chart showing problem distribution by difficulty
 def generate_chart(easy, medium, hard, output_path):
     labels = ["Easy", "Medium", "Hard"]
     sizes = [easy, medium, hard]
     colors = ["green", "purple", "red"]
-
     total = sum(sizes)
     if total == 0:
         print("❌ No data to plot.")
         return
-
     fig, ax = plt.subplots(figsize=(6, 6))
     wedges, _ = ax.pie(
         sizes,
@@ -131,12 +131,9 @@ def generate_chart(easy, medium, hard, output_path):
         colors=colors,
         wedgeprops=dict(width=0.4, edgecolor="white"),
     )
-
     for i, wedge in enumerate(wedges):
         angle = (wedge.theta2 + wedge.theta1) / 2.0
         angle_rad = angle * pi / 180
-
-        # Position for percentage (inside)
         x = 0.4 * cos(angle_rad)
         y = 0.4 * sin(angle_rad)
         pct = f"{(sizes[i] / total) * 100:.1f}%"
@@ -150,8 +147,6 @@ def generate_chart(easy, medium, hard, output_path):
             weight="bold",
             fontsize=12,
         )
-
-        # Position for label (outside)
         lx = 0.85 * cos(angle_rad)
         ly = 0.85 * sin(angle_rad)
         ax.text(
@@ -165,55 +160,44 @@ def generate_chart(easy, medium, hard, output_path):
             weight="bold",
         )
 
-    # White title
     ax.set_title(
         "LeetCode Problem Distribution", fontsize=14, weight="bold", color="white"
     )
-
-    # Transparent background
     fig.patch.set_alpha(0)
     ax.set_facecolor("none")
     ax.set(aspect="equal")
-
     plt.savefig(output_path, transparent=True)
     plt.close()
     print(f"📊 Chart saved to {output_path}")
 
 
+# Returns a formatted Markdown row for the README table
 def format_row(label, count):
     return f"| {label.ljust(10)} | {str(count).zfill(2).ljust(6)} |"
 
 
+# Generates the final README from the template with inserted stats and cleans up formatting
 def generate_readme(easy, medium, hard):
     if not TEMPLATE_PATH.exists():
         print("❌ README.template.md not found.")
         return
-
     today_str = datetime.today().strftime("%B %d, %Y")
-
     with open(TEMPLATE_PATH, "r", encoding="utf-8") as f:
         template = f.read()
 
-    # Generate full rows
     easy_row = format_row("Easy", easy)
     medium_row = format_row("Medium", medium)
     hard_row = format_row("Hard", hard)
 
-    # Remove any blank lines just before row placeholders
     template_lines = template.splitlines()
     cleaned_lines = []
-
     for line in template_lines:
         if line.strip() in ["{{EASY_ROW}}", "{{MEDIUM_ROW}}", "{{HARD_ROW}}"]:
-            # Remove blank line if it exists just before
             if cleaned_lines and cleaned_lines[-1].strip() == "":
                 cleaned_lines.pop()
         cleaned_lines.append(line)
 
-    # Convert back to a single string
     cleaned_template = "\n".join(cleaned_lines)
-
-    # Now perform the replacements
     output = (
         cleaned_template.replace("{{EASY_ROW}}", easy_row)
         .replace("{{MEDIUM_ROW}}", medium_row)
@@ -223,30 +207,26 @@ def generate_readme(easy, medium, hard):
 
     with open(README_PATH, "w", encoding="utf-8") as f:
         f.write(output)
-
     print(f"📝 README.md generated successfully from template ({today_str})")
 
 
+# ---------- MAIN EXECUTION ----------
 if __name__ == "__main__":
     print("📁 Analyzing repo:", REPO_PATH)
-
     problem_ids = get_problem_ids_in_repo(REPO_PATH)
     problem_map = fetch_leetcode_metadata(expected_ids=problem_ids)
-
     difficulty_counts, missing_ids = analyze_repo(REPO_PATH, problem_map)
     print_summary(difficulty_counts, label=Path(REPO_PATH).name)
-
     log_missing_problems(missing_ids)
-
     generate_chart(
         easy=difficulty_counts.get("easy", 0),
         medium=difficulty_counts.get("medium", 0),
         hard=difficulty_counts.get("hard", 0),
         output_path=CHART_OUTPUT_PATH,
     )
-
     generate_readme(
         easy=difficulty_counts.get("easy", 0),
         medium=difficulty_counts.get("medium", 0),
         hard=difficulty_counts.get("hard", 0),
     )
+    print("✅ Analysis complete!")
