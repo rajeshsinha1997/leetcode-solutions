@@ -21,6 +21,8 @@ leetcode-solutions/
 
 ## 📈 Progress
 
+> 📅 **Last updated on:** June 25, 2025
+
 | Difficulty | Solved |
 | ---------- | ------ |
 | Easy       | 02     |
@@ -29,7 +31,6 @@ leetcode-solutions/
 
 # Progress Chart
 
-> ⚠️ **Note:** The progress chart below is **not updated in real time**.  
 > 📅 **Last updated on:** June 25, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)

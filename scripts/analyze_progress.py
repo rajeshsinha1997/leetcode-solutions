@@ -6,9 +6,11 @@ import requests
 from pathlib import Path
 from collections import defaultdict
 from datetime import datetime
+import matplotlib.pyplot as plt
+from math import cos, sin, pi
 
 # ---------- CONFIG ----------
-REPO_PATH = "../solution-set-1_typescript"  # Change this if your solution folder moves
+REPO_PATH = "D:\\GitHub Projects\\leetcode-solutions\\solution-set-1_typescript"  # Change this if your solution folder moves
 CACHE_DIR = Path(__file__).parent / "cache"
 CACHE_DIR.mkdir(exist_ok=True)  # Create it if it doesn't exist
 CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"
@@ -17,6 +19,9 @@ README_PATH = Path(__file__).parent.parent / "README.md"
 MISSING_DATA_DIR = Path(__file__).parent / "errors"
 MISSING_DATA_DIR.mkdir(exist_ok=True)
 MISSING_PROBLEMS_PATH = MISSING_DATA_DIR / "missing_problems.json"
+CHART_OUTPUT_PATH = (
+    Path(__file__).parent.parent / "assets" / "problem-solved-count-chart.png"
+)
 # ----------------------------
 
 
@@ -107,6 +112,73 @@ def log_missing_problems(missing_ids):
     print(f"📁 Missing problem IDs saved to: {MISSING_PROBLEMS_PATH}")
 
 
+def generate_chart(easy, medium, hard, output_path):
+    labels = ["Easy", "Medium", "Hard"]
+    sizes = [easy, medium, hard]
+    colors = ["green", "purple", "red"]
+
+    total = sum(sizes)
+    if total == 0:
+        print("❌ No data to plot.")
+        return
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    wedges, _ = ax.pie(
+        sizes,
+        startangle=90,
+        counterclock=False,
+        colors=colors,
+        wedgeprops=dict(width=0.4, edgecolor="white"),
+    )
+
+    for i, wedge in enumerate(wedges):
+        angle = (wedge.theta2 + wedge.theta1) / 2.0
+        angle_rad = angle * pi / 180
+
+        # Position for percentage (inside)
+        x = 0.4 * cos(angle_rad)
+        y = 0.4 * sin(angle_rad)
+        pct = f"{(sizes[i] / total) * 100:.1f}%"
+        ax.text(
+            x,
+            y,
+            pct,
+            ha="center",
+            va="center",
+            color="white",
+            weight="bold",
+            fontsize=12,
+        )
+
+        # Position for label (outside)
+        lx = 0.85 * cos(angle_rad)
+        ly = 0.85 * sin(angle_rad)
+        ax.text(
+            lx,
+            ly,
+            labels[i],
+            ha="center",
+            va="center",
+            color="white",
+            fontsize=11,
+            weight="bold",
+        )
+
+    # White title
+    ax.set_title(
+        "LeetCode Problem Distribution", fontsize=14, weight="bold", color="white"
+    )
+
+    # Transparent background
+    fig.patch.set_alpha(0)
+    ax.set_facecolor("none")
+    ax.set(aspect="equal")
+
+    plt.savefig(output_path, transparent=True)
+    plt.close()
+    print(f"📊 Chart saved to {output_path}")
+
+
 def format_row(label, count):
     return f"| {label.ljust(10)} | {str(count).zfill(2).ljust(6)} |"
 
@@ -169,6 +241,13 @@ if __name__ == "__main__":
     print_summary(difficulty_counts, label=Path(REPO_PATH).name)
 
     log_missing_problems(missing_ids)
+
+    generate_chart(
+        easy=difficulty_counts.get("easy", 0),
+        medium=difficulty_counts.get("medium", 0),
+        hard=difficulty_counts.get("hard", 0),
+        output_path=CHART_OUTPUT_PATH,
+    )
 
     generate_readme(
         easy=difficulty_counts.get("easy", 0),

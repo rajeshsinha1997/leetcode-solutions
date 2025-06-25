@@ -21,6 +21,8 @@ leetcode-solutions/
 
 ## 📈 Progress
 
+> 📅 **Last updated on:** {{LAST_UPDATED}}
+
 | Difficulty | Solved |
 | ---------- | ------ |
 
@@ -30,7 +32,6 @@ leetcode-solutions/
 
 # Progress Chart
 
-> ⚠️ **Note:** The progress chart below is **not updated in real time**.  
 > 📅 **Last updated on:** {{LAST_UPDATED}}
 
 ![Chart](assets/problem-solved-count-chart.png)
