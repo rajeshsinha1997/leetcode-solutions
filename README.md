@@ -28,7 +28,7 @@ leetcode-solutions/
 | Difficulty | Solved |
 | ---------- | ------ |
 | Easy       | 05     |
-| Medium     | 09     |
+| Medium     | 11     |
 | Hard       | 01     |
 
 # Progress Chart
