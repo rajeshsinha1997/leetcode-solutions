@@ -24,12 +24,13 @@ function backtrack(
   requiredArrayLength: number,
   resultArray: number[][]
 ) {
-  // if the remaining sum is 0 and the current array has the required length,
-  if (
-    currentArray.length < requiredArrayLength &&
-    remainingSum > 0 &&
-    currentNumber <= remainingSum
-  ) {
+  // if the current array has the required length and the remaining sum is 0,
+  if (currentArray.length === requiredArrayLength && remainingSum === 0) {
+    // push a copy of the current array to the result array
+    resultArray.push([...currentArray]);
+  }
+  // otherwise, if the remaining sum is 0 and the current array has the required length,
+  else if (currentArray.length < requiredArrayLength && remainingSum > 0) {
     // iterate through the numbers from currentNumber to 9
     for (let num = currentNumber; num < 10; num++) {
       // check if the number is greater than the remaining sum
@@ -52,11 +53,6 @@ function backtrack(
       // remove the last number from the current array
       currentArray.pop();
     }
-  }
-  // otherwise, if the current array has the required length and the remaining sum is 0,
-  else if (currentArray.length === requiredArrayLength && remainingSum === 0) {
-    // push a copy of the current array to the result array
-    resultArray.push([...currentArray]);
   }
 }
 // @lc code=end
