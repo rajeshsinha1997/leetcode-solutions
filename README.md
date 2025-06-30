@@ -23,7 +23,7 @@ leetcode-solutions/
 
 ## 📈 Progress
 
-> 📅 **Last updated on:** June 29, 2025
+> 📅 **Last updated on:** June 30, 2025
 
 | Difficulty | Solved |
 | ---------- | ------ |
@@ -33,7 +33,7 @@ leetcode-solutions/
 
 # Progress Chart
 
-> 📅 **Last updated on:** June 29, 2025
+> 📅 **Last updated on:** June 30, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)
 
