@@ -8,7 +8,7 @@ This repository contains my personal solutions to various problems on [LeetCode]
 
 ```
 leetcode-solutions/
-├── solution-set-1_typescript
+├── typescript
     ├── problem-1.ts
     ├── problem-2.ts
 ```

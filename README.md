@@ -8,7 +8,7 @@ This repository contains my personal solutions to various problems on [LeetCode]
 
 ```
 leetcode-solutions/
-├── solution-set-1_typescript
+├── typescript
     ├── problem-1.ts
     ├── problem-2.ts
 ```
@@ -23,7 +23,7 @@ leetcode-solutions/
 
 ## 📈 Progress
 
-> 📅 **Last updated on:** June 30, 2025
+> 📅 **Last updated on:** July 05, 2025
 
 | Difficulty | Solved |
 | ---------- | ------ |
@@ -33,7 +33,7 @@ leetcode-solutions/
 
 # Progress Chart
 
-> 📅 **Last updated on:** June 30, 2025
+> 📅 **Last updated on:** July 05, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)
 

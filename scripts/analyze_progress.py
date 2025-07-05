@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 from math import cos, sin, pi
 
 # ---------- CONFIGURATION ----------
-REPO_PATH = "../solution-set-1_typescript"  # Path to solution directory
+REPO_PATH = "../typescript"  # Path to solution directory
 CACHE_DIR = Path(__file__).parent / "cache"  # Cache directory for API data
 CACHE_DIR.mkdir(exist_ok=True)  # Create cache directory if it doesn't exist
 CACHE_PATH = CACHE_DIR / "leetcode_metadata_cache.json"  # Cache file path
