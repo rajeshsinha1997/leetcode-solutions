@@ -20,6 +20,7 @@ leetcode-solutions/
 ## ✅ Problem Categories
 
 - Array
+- Stack
 
 ## 📈 Progress
 

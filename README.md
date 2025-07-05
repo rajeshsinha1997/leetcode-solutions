@@ -20,20 +20,21 @@ leetcode-solutions/
 ## ✅ Problem Categories
 
 - Array
+- Stack
 
 ## 📈 Progress
 
-> 📅 **Last updated on:** July 05, 2025
+> 📅 **Last updated on:** July 06, 2025
 
 | Difficulty | Solved |
 | ---------- | ------ |
 | Easy       | 05     |
-| Medium     | 12     |
+| Medium     | 13     |
 | Hard       | 01     |
 
 # Progress Chart
 
-> 📅 **Last updated on:** July 05, 2025
+> 📅 **Last updated on:** July 06, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)
 
