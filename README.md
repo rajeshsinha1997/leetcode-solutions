@@ -17,14 +17,9 @@ leetcode-solutions/
 
 - 🟨 TypeScript
 
-## ✅ Problem Categories
-
-- Array
-- Stack
-
 ## 📈 Progress
 
-> 📅 **Last updated on:** July 06, 2025
+> 📅 **Last updated on:** July 07, 2025
 
 | Difficulty | Solved |
 | ---------- | ------ |
@@ -34,7 +29,7 @@ leetcode-solutions/
 
 # Progress Chart
 
-> 📅 **Last updated on:** July 06, 2025
+> 📅 **Last updated on:** July 07, 2025
 
 ![Chart](assets/problem-solved-count-chart.png)
 

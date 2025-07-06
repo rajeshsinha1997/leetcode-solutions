@@ -17,11 +17,6 @@ leetcode-solutions/
 
 - 🟨 TypeScript
 
-## ✅ Problem Categories
-
-- Array
-- Stack
-
 ## 📈 Progress
 
 > 📅 **Last updated on:** {{LAST_UPDATED}}
